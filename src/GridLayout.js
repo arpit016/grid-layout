@@ -13,8 +13,10 @@ const initialLayouts = {
   // this 'i' needs to be unique it uses this i to render the correct component in respective x y positions
   // the order of this array and of original items array does not matter here 
   // this can be maybe cardId?
+  // it can accept minH, minW, maxW, maxH
+  // All values here are in units and not in pixel
   lg: [
-    { i: "123", x: 0, y: 0, w: 1, h: 4 },
+    { i: "123", x: 0, y: 0, w: 1, h: 4, minH: 4, minW: 1 },
     { i: "456", x: 1, y: 0, w: 3, h: 4 },
     { i: "789", x: 4, y: 0, w: 1, h: 4 },
     { i: "987", x: 0, y: 4, w: 2, h: 4 },
