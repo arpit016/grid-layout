@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { withSize } from "react-sizeme";
 import Widget from "./Widget";
 
 const originalItems = [{cardId: "123", cardType: "a", content: "A"},
                        {cardId: "456", cardType: "b", content: "B"},
                        {cardId: "789", cardType: "c", content: "C"},
                        {cardId: "987", cardType: "d", content: "D"},
-                       {cardId: "988", cardType: "b", content: "B component with diff content"}];
+                       ];
 
 const initialLayouts = {
-  // this 'i' needs to be unique it uses this i to map to the key component
-  // we will have an issue with this thing because if we use this we will have to save the layout
-  // problem is how do i take care of the i values? which is unique as well as tells us how things are rendered
-  // on a page
+  // This initiallayout shud come from backend
+  // this 'i' needs to be unique it uses this i to render the correct component in respective x y positions
+  // the order of this array and of original items array does not matter here 
   // this can be maybe cardId?
   lg: [
     { i: "123", x: 0, y: 0, w: 1, h: 4 },
     { i: "456", x: 1, y: 0, w: 3, h: 4 },
     { i: "789", x: 4, y: 0, w: 1, h: 4 },
     { i: "987", x: 0, y: 4, w: 2, h: 4 },
-    { i: "988", x: 0, y: 4, w: 2, h: 4 }
   ]
 };
 
@@ -65,10 +62,12 @@ function GridLayout() {
     // when removing items it is necessary to delete from the main items array rather than the layout array
     setItems(items.filter((i) => i !== itemId));
   };
-  const onAddItem = (itemId) => {
-    setItems([...items, itemId]);
+  const onAddItem = () => {
+    // this method currently will work only once but the idea is to ge the new card details from backend
+    // and update the cardarray by default it ll get added to the bottom
+    const obj = {cardId: "988", cardType: "b", content: "B component with diff content"}
+    setItems([...items, obj]);
   };
-
   return (
     <>
       <button onClick={() => onLayoutSave()}>Save Layout</button>
