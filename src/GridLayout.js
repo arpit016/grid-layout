@@ -17,8 +17,8 @@ const initialLayouts = {
   // All values here are in units and not in pixel
   lg: [
     { i: "123", x: 0, y: 0, w: 1, h: 4, minH: 4, minW: 1 },
-    { i: "456", x: 1, y: 0, w: 3, h: 4 },
-    { i: "789", x: 4, y: 0, w: 1, h: 4 },
+    { i: "456", x: 0, y: 0, w: 3, h: 4 },
+    { i: "789", x: 0, y: 0, w: 1, h: 4 },
     { i: "987", x: 0, y: 4, w: 2, h: 4 },
   ]
 };
@@ -48,14 +48,17 @@ const ResponsiveGridLayout = WidthProvider(Responsive)
 
 function GridLayout() {
   const [items, setItems] = useState(originalItems);
-  const [layouts, setLayouts] = useState(
-    initialLayouts
-  );
+  const [layouts, setLayouts] = useState([
+    { i: "123", x: 0, y: 0, w: 1, h: 2 },
+    { i: "456", x: 1, y: 0, w: 3, h: 2 },
+    { i: "789", x: 4, y: 0, w: 1, h: 2 }
+  ]);
   const onLayoutChange = (_, allLayouts) => {
     // initial layout still need to be created from the backend
     // we need to save this allLayouts object somewhere in the db i think schedule might be a better place
+    console.log("under", _)
     console.log("All Layouts: ", allLayouts)
-    setLayouts(allLayouts);
+    setLayouts(_);
   };
   const onLayoutSave = () => {
     saveToLS("layouts", layouts);
@@ -70,13 +73,24 @@ function GridLayout() {
     const obj = {cardId: "988", cardType: "b", content: "B component with diff content"}
     setItems([...items, obj]);
   };
+
+  const increaseHeight = () => {
+    const newLayout = layouts.map((card) => {
+      return {...card}
+    })
+    console.log(newLayout === layouts)
+    console.log(newLayout[0] === layouts[0])
+    newLayout[0].h = newLayout[0].h + 1
+    setLayouts(newLayout)
+  }
   return (
     <>
       <button onClick={() => onLayoutSave()}>Save Layout</button>
       <button onClick={() => onAddItem()}>Add Item</button>
+      <button onClick={() => increaseHeight()}>Increase Height</button>
       <ResponsiveGridLayout
         className="layout"
-        layouts={layouts}
+        layouts={{lg: [...layouts]}}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 6, md: 6, sm: 6, xs: 1, xxs: 1 }}
         rowHeight={60}

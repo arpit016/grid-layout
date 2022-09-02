@@ -35,7 +35,7 @@ const Widget = ({id, onRemoveItem, item}) => {
       <div className={classes.header}>
         <h6>
           {widgetNames[item.cardType]}
-          {item.content}
+          {item.content} {item.cardId}
         </h6>
         <div className={classes.spacer} />
         <button aria-label="delete" onClick={() => onRemoveItem(id)}>
